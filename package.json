@@ -1,8 +1,8 @@
 {
   "name": "audio-utils",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves",
-  "main": "index.js",
+  "main": "src/audio_utils.js",
   "scripts": {
     "test": "make"
   },
@@ -15,10 +15,18 @@
     "beat",
     "detection",
     "synthesis",
+    "signal",
+    "processing",
+    "populate",
     "buffer"
   ],
   "author": "Scott Stensland <scottstensland@gmail.com> (http://catfoodnation.com/)",
-  "license": "ISC",
+  "licenses": [
+    {
+      "type": "WTFPL – Do What the Fuck You Want to Public License",
+      "url": "http://www.wtfpl.net"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/scottstensland/audio-utils/issues"
   },
