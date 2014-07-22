@@ -1,0 +1,26 @@
+{
+  "name": "audio-utils",
+  "version": "0.0.0",
+  "description": "Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves",
+  "main": "index.js",
+  "scripts": {
+    "test": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scottstensland/audio-utils.git"
+  },
+  "keywords": [
+    "audio",
+    "beat",
+    "detection",
+    "synthesis",
+    "buffer"
+  ],
+  "author": "Scott Stensland <scottstensland@gmail.com> (http://catfoodnation.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottstensland/audio-utils/issues"
+  },
+  "homepage": "https://github.com/scottstensland/audio-utils"
+}
