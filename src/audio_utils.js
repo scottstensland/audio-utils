@@ -38,13 +38,18 @@ switch (environment_mode) {
         break;
 };
 
-var detect_fundamental_frequency = function(audio_obj, SIZE_BUFFER_SOURCE, samples_per_cycle) {
+// var detect_fundamental_frequency = function(audio_obj, SIZE_BUFFER_SOURCE, samples_per_cycle) {
+var detect_fundamental_frequency = function(audio_obj) {
 
 // --- iterate across to identify dominate frequency --- //
 
-console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
-console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
-console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
+
+var SIZE_BUFFER_SOURCE = audio_obj.buffer.length;
+
+
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE);
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE);
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE);
 
 
 shared_utils.show_object(audio_obj, 
@@ -167,7 +172,7 @@ do {
 
 
     console.log("" + shared_utils.toFixed(size_subsection, 5),
-        shared_utils.toFixed(samples_per_cycle, 5),
+        // shared_utils.toFixed(samples_per_cycle, 5),
         shared_utils.toFixed(count_num_iterations, 5),
              " subsection_diff ", 
               shared_utils.toFixed(subsection_diff/count_num_iterations, 5)
