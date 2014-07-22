@@ -38,18 +38,22 @@ switch (environment_mode) {
         break;
 };
 
-var detect_fundamental_frequency = function(audio_obj) {
+var detect_fundamental_frequency = function(audio_obj, SIZE_BUFFER_SOURCE, samples_per_cycle) {
 
 // --- iterate across to identify dominate frequency --- //
 
-console.log("detect_fundamental_frequency");
-console.log("detect_fundamental_frequency");
-console.log("detect_fundamental_frequency");
-console.log("detect_fundamental_frequency");
-console.log("detect_fundamental_frequency");
-console.log("detect_fundamental_frequency");
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
+console.log("detect_fundamental_frequency SIZE_BUFFER_SOURCE ", SIZE_BUFFER_SOURCE, samples_per_cycle);
 
-var minimum_size_subsection = 10;
+
+shared_utils.show_object(audio_obj, 
+    "DFF audio_obj  DFF", "total", 10);
+
+
+
+// var minimum_size_subsection = 4;
+var minimum_size_subsection = 6;
 // var minimum_size_subsection = 25;
 
 var curr_interval = 2;  // take entire input buffer and divide by this looking for similarities between such subsections
