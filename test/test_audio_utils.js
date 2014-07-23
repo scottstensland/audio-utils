@@ -25,7 +25,6 @@ function resolvePath(str) {
 
 // ---
 
-
 var shared_utils;
 
 switch (environment_mode) {
@@ -73,73 +72,67 @@ var cb_write_file_done = function(audio_obj, cb_post_write) {
 
 var synth_curve_write_to_wav_file_then_read_back = function () {
 
+    // ---------- generates sin tone ------------- //
 
-// ---------- generates nice listenable sin tone ------------- //
+    var output_dir = resolvePath("~/Dropbox/Documents/data/audio/");
 
-SIZE_BUFFER_SOURCE = 256;
-// SIZE_BUFFER_SOURCE = 16384;
+    var output_format = ".wav";
 
-var samples_per_cycle = 64;
+    console.log(" output_dir ", output_dir);
 
+    // ----------------
 
+    var SIZE_BUFFER_SOURCE = 256;
+    // SIZE_BUFFER_SOURCE = 16384;
 
-var output_dir = resolvePath("~/Dropbox/Documents/data/audio/");
+    var samples_per_cycle = 64;
 
-var output_format = ".wav";
+    var source_obj = {};
 
-console.log(" output_dir ", output_dir);
+    var source_obj = audio_utils.pop_audio_buffer(SIZE_BUFFER_SOURCE, samples_per_cycle);
 
-// ----------------
+    var max_index = 3;
+    // var max_index = SIZE_BUFFER_SOURCE;
 
-var source_obj = {};
+    for (var index = 0; index < max_index; index++) {
 
-var source_obj = audio_utils.pop_audio_buffer(SIZE_BUFFER_SOURCE, samples_per_cycle);
+        console.log(index, " pop_audio_buffer ", source_obj.buffer[index]);
+    }
 
-var max_index = 3;
-// var max_index = SIZE_BUFFER_SOURCE;
+    // ---------- write to output file ------------- //
 
-for (var index = 0; index < max_index; index++) {
+    var source_wave = "audio_util_test_file";
 
-    console.log(index, " pop_audio_buffer ", source_obj.buffer[index]);
-}
+    var source_wave_filename = path.join(output_dir, source_wave + output_format);
 
-// ---------- write to output file ------------- //
+    console.log("source_wave_filename   ", source_wave_filename);
 
-var source_wave = "audio_util_test_file";
+    shared_utils.write_32_bit_float_buffer_to_16_bit_wav_file(source_obj, source_wave_filename);
 
-var source_wave_filename = path.join(output_dir, source_wave + output_format);
+    console.log("source_wave_filename   ", source_wave_filename);
 
-console.log("source_wave_filename   ", source_wave_filename);
+    // ------------ read wav file -------------------- //
 
-shared_utils.write_32_bit_float_buffer_to_16_bit_wav_file(source_obj, source_wave_filename);
+    console.log("\n\nread wav file\n\n");
 
-console.log("source_wave_filename   ", source_wave_filename);
+    var wav_file_input_obj = {};  // create stub object to which we attach .buffer
 
-// ------------ read wav file -------------------- //
+    var property_buffer_raw_input_file = "buffer_raw_input_file";
+    var property_buffer_input_file     = "buffer_input_file";
 
-console.log("\n\nread wav file\n\n");
+    wav_file_input_obj.filename = source_wave_filename;
 
-var wav_file_input_obj = {};  // create stub object to which we attach .buffer
+    wav_file_input_obj[property_buffer_raw_input_file] = new Buffer(0);
 
+    console.log("abouttttt to read wav_file_input_obj.filename ", wav_file_input_obj.filename);
 
-var property_buffer_raw_input_file = "buffer_raw_input_file";
-var property_buffer_input_file     = "buffer_input_file";
+    var spec = {};
 
-wav_file_input_obj.filename = source_wave_filename;
-
-
-wav_file_input_obj[property_buffer_raw_input_file] = new Buffer(0);
-
-
-console.log("abouttttt to read wav_file_input_obj.filename ", wav_file_input_obj.filename);
-
-var spec = {};
-
-shared_utils.read_16_bit_wav_file_into_32_bit_float_buffer(
-                                wav_file_input_obj,
-                                wav_file_input_obj.filename, 
-                                spec,
-                                cb_read_file_done);
+    shared_utils.read_16_bit_wav_file_into_32_bit_float_buffer(
+                                    wav_file_input_obj,
+                                    wav_file_input_obj.filename, 
+                                    spec,
+                                    cb_read_file_done);
 
 };      //      synth_curve_write_to_wav_file_then_read_back
 
