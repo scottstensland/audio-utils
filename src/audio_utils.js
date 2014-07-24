@@ -44,6 +44,8 @@ var play_detect_frequency = function(audio_obj, spec) {
 
 // --- iterate across to identify dominate frequency --- //
 
+// http://stackoverflow.com/questions/65268/how-do-you-analyse-the-fundamental-frequency-of-a-pcm-or-wav-sample
+
 console.log("raw spec ", spec);
 
 var default_min_error_thresold = 0.1;
