@@ -44,26 +44,31 @@ var play_detect_frequency = function(audio_obj, spec) {
 
 // --- iterate across to identify dominate frequency --- //
 
+console.log("raw spec ", spec);
+
 var default_min_error_thresold = 0.1;
 var default_minimum_size_subsection = 6;
-var defafult_max_samples_per_subsection = 30;
+var default_max_samples_per_subsection = 30;
 
+var subsection_mode_decimation = "decimation"; // keep dividing buffer size by incrementing counter
+var subsection_mode_continuous = "continuous"; // continuously slide left/right center point closer to start
 
-var default_subsection_mode = "decimation"; // keep dividing buffer size by incrementing counter
-var default_subsection_mode = "continuous"; // continuously slide left/right center point closer to start
-
+var default_subsection_mode = subsection_mode_decimation;
+// var default_subsection_mode = subsection_mode_continuous;
 
 var spec = spec || {
 
             min_error_thresold : default_min_error_thresold,
        minimum_size_subsection : default_minimum_size_subsection,
-    max_samples_per_subsection : defafult_max_samples_per_subsection,
+    max_samples_per_subsection : default_max_samples_per_subsection,
                subsection_mode : default_subsection_mode
 };
 
 var min_error_thresold         = spec.min_error_thresold         || default_min_error_thresold;
 var minimum_size_subsection    = spec.minimum_size_subsection    || default_minimum_size_subsection;
-var max_samples_per_subsection = spec.max_samples_per_subsection || defafult_max_samples_per_subsection;
+var max_samples_per_subsection = spec.max_samples_per_subsection || default_max_samples_per_subsection;
+var subsection_mode = spec.subsection_mode || default_subsection_mode;
+
 
 console.log("min_error_thresold ", min_error_thresold);
 
@@ -122,28 +127,50 @@ var subsection_total;
 var subsection_diff;
 var count_num_iterations;
 
+var loop_counter = 0;
+var init_size_subsection = ~~(SIZE_BUFFER_SOURCE / curr_interval); // for continuous mode
+
+console.log("subsection_mode ", subsection_mode);
+
 do {
 
-    size_subsection = ~~(SIZE_BUFFER_SOURCE / curr_interval);
+    if (subsection_mode == subsection_mode_decimation) {
 
-    if (size_subsection == prev_size_subsection) {
+        size_subsection = ~~(SIZE_BUFFER_SOURCE / curr_interval);
 
-        curr_interval++;
-        continue;
-    }
+        if (size_subsection == prev_size_subsection) {
 
-    if (size_subsection < max_size_subsample_to_do_increment_fixup) {        
+            curr_interval++;
+            continue;
+        }
 
-        size_increment = 1;
+        if (size_subsection < max_size_subsample_to_do_increment_fixup) {        
 
+            size_increment = 1;
+
+            reconstituted_size_subsection = size_subsection;
+
+        } else {
+
+            size_increment = ~~(size_subsection / max_samples_per_subsection);
+
+            reconstituted_size_subsection = size_increment * max_samples_per_subsection;
+        };
+
+    } else if (subsection_mode == subsection_mode_continuous) {
+
+        size_subsection = init_size_subsection - (loop_counter * 2);
         reconstituted_size_subsection = size_subsection;
+        size_increment = 1;
 
     } else {
 
-        size_increment = ~~(size_subsection / max_samples_per_subsection);
+        console.error("ERROR - invalid subsection_mode : ", subsection_mode);
+        process.exit(8);
+    }
 
-        reconstituted_size_subsection = size_increment * max_samples_per_subsection;
-    };
+    // ------------------------------------------------------------------------------------
+
 
     // stens TODO - we may want to compare more than ONE pair ... make it a parm to compare X cycles
 
@@ -183,12 +210,15 @@ do {
 
         // console.log("aaa %d %d %f %d %f", reconstituted_size_subsection, curr_left, curr_sample_left, curr_right, curr_sample_right);
         // process.stdout.write('aaa %d %d %f %d %f\n', reconstituted_size_subsection, curr_left, curr_sample_left, curr_right, curr_sample_right);
+
+        /*
         console.log("" + shared_utils.toFixed(reconstituted_size_subsection, 5),
                     // curr_left, curr_sample_left.toFixed(5), 
                     // curr_right, curr_sample_right.toFixed(5), " vs mine ",
                     shared_utils.toFixed(curr_left, 5), shared_utils.toFixed(curr_sample_left, 5), 
                     shared_utils.toFixed(curr_right, 5), shared_utils.toFixed(curr_sample_right, 5)
                     );
+        */
     };
 
     // console.log("" + size_subsection, samples_per_cycle, count_num_iterations,
@@ -206,6 +236,7 @@ do {
         spec.all_low_error_sample_sizes.push(this_goodie);
     }
 
+    /*
     console.log("" + shared_utils.toFixed(size_subsection, 5),
         // shared_utils.toFixed(samples_per_cycle, 5),
         shared_utils.toFixed(count_num_iterations, 5),
@@ -213,11 +244,13 @@ do {
               // shared_utils.toFixed(subsection_diff/count_num_iterations, 5)
               shared_utils.toFixed(aggregate_diff, 5)
              );
+    */
 
     // ---
     
     prev_size_subsection = size_subsection;
     curr_interval++;
+    loop_counter++;
 
 } while (size_subsection > minimum_size_subsection);
 
