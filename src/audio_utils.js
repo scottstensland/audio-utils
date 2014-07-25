@@ -40,7 +40,7 @@ switch (environment_mode) {
 
 // ---
 
-var play_detect_frequency = function(audio_obj, spec) {
+var play_detect_frequency = function(audio_obj, spec) {   // this is a new version of detect_fundamental_frequency
 
 // --- iterate across to identify dominate frequency --- //
 
@@ -256,7 +256,7 @@ do {
 
 } while (size_subsection > minimum_size_subsection);
 
-};      //      detect_fundamental_frequency
+};      //      play_detect_frequency
 
 that.play_detect_frequency = play_detect_frequency;
 
