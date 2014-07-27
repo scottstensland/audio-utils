@@ -29,8 +29,17 @@ var shared_utils;
 
 switch (environment_mode) {
 
-    case "nubia": // repository owner tinkering mode - ignore it 
-        shared_utils  = require(resolvePath("~/Dropbox/Documents/code/github/shared-utils/src/node_utils"));
+    case "nubia":  // repository owner tinkering mode - ignore it and use nothing which defaults to dev which is OK
+
+        var local_github_parent = process.env.GITHUB_REPO_PARENT;
+
+        if ( ! local_github_parent ) {
+
+            console.error("ERROR - do not use environment_mode value of :", environment_mode, 
+                            " instead use dev or leave blank");
+            process.exit(8);
+        }
+        shared_utils   = require(resolvePath(local_github_parent + "shared-utils/src/node_utils"));
         break;
 
     case "dev":
@@ -74,7 +83,9 @@ var synth_curve_write_to_wav_file_then_read_back = function () {
 
     // ---------- generates sin tone ------------- //
 
-    var output_dir = resolvePath("~/Dropbox/Documents/data/audio/");
+    var local_output_dir = process.env.AUDIO_DIR || process.env.HOME;
+
+    var output_dir = resolvePath(local_output_dir);
 
     var output_format = ".wav";
 
