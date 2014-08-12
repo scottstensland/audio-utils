@@ -18,8 +18,6 @@ function resolvePath(str) {
 
 // -------------------------------------------------------- //
 
-console.log("do_clustering  ....  environment_mode ", environment_mode);
-
 var that = {};
 var shared_utils;
 
