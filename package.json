@@ -4,7 +4,7 @@
   "description": "Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves",
   "main": "src/audio_utils.js",
   "scripts": {
-    "test": "make"
+    "test": "node test/test_audio_utils.js"
   },
   "repository": {
     "type": "git",
