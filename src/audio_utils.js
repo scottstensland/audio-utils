@@ -1,50 +1,10 @@
 
-module.exports.audio_utils = function(environment_mode) { // functional inheritance Crockford 2008 pg 52
+module.exports.audio_utils = function() {
 
-/*
-
-    Audio utilities like fundamental frequency detection, populate bufer with sinusoidal curves
-
-*/
-
-var path = require('path');
-
-function resolvePath(str) {
-  if (str.substr(0, 2) === '~/') {
-    str = (process.env.HOME || process.env.HOMEPATH || process.env.HOMEDIR || process.cwd()) + str.substr(1);
-  }
-  return path.resolve(str);
-}
-
-// -------------------------------------------------------- //
+// Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves
 
 var that = {};
-var shared_utils;
-
-switch (environment_mode) {
-
-    case "nubia":  // repository owner tinkering mode - ignore it and use nothing which defaults to dev which is OK
-
-        var local_github_parent = process.env.GITHUB_REPO_PARENT;
-
-        if ( ! local_github_parent ) {
-
-            console.error("ERROR - do not use environment_mode value of :", environment_mode, 
-                            " instead use dev or leave blank");
-            process.exit(8);
-        }
-
-        shared_utils   = require(resolvePath(local_github_parent + "shared-utils/src/node_utils"));
-        break;
-
-    case "dev":
-        shared_utils  = require("shared-utils");    // get these modules from global install
-        break;
-
-    default :
-        shared_utils  = require("shared-utils");
-        break;
-};
+var shared_utils = require("shared-utils");
 
 // ---
 
@@ -454,10 +414,9 @@ var pop_audio_buffer = function (size_buff, given_samples_per_cycle) {
 
     /*
 
-    value add of how this populates buffer with sinusoidal curve is the
-    curve is assured to both start and stop at the zero cross over threshold,
+    output sinusoidal curve is assured to both start and stop at the zero cross over threshold,
     independent of supplied input parms which control samples per cycle and buffer size.
-    This avoids that "pop" which otherwise happens when rendering audio curve
+    This avoids that "pop" which otherwise happens when rendering audio curves
     which begins at say 0.5 of a possible range -1 to 0 to +1
 
     */

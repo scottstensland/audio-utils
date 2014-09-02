@@ -1,14 +1,10 @@
 #!/usr/bin/env node 
 
-var environment_mode = process.argv[2] || "dev";
-
-console.warn("running code in environment_mode: ", environment_mode);
-
 // ---
 
 var audio_util_obj = require("../src/audio_utils");
 
-var audio_utils = audio_util_obj.audio_utils(environment_mode);
+var audio_utils = audio_util_obj.audio_utils();
 
 console.log("audio_utils ", audio_utils);
 
@@ -25,31 +21,7 @@ function resolvePath(str) {
 
 // ---
 
-var shared_utils;
-
-switch (environment_mode) {
-
-    case "nubia":  // repository owner tinkering mode - ignore it and use nothing which defaults to dev which is OK
-
-        var local_github_parent = process.env.GITHUB_REPO_PARENT;
-
-        if ( ! local_github_parent ) {
-
-            console.error("ERROR - do not use environment_mode value of :", environment_mode, 
-                            " instead use dev or leave blank");
-            process.exit(8);
-        }
-        shared_utils   = require(resolvePath(local_github_parent + "shared-utils/src/node_utils"));
-        break;
-
-    case "dev":
-        shared_utils  = require("shared-utils");    // get these modules from global install
-        break;
-
-    default :
-        shared_utils  = require("shared-utils");
-        break;
-};
+var shared_utils = require("shared-utils");
 
 // ------------------------------------- //
 
@@ -118,7 +90,14 @@ var synth_curve_write_to_wav_file_then_read_back = function () {
 
     console.log("source_wave_filename   ", source_wave_filename);
 
-    shared_utils.write_32_bit_float_buffer_to_16_bit_wav_file(source_obj, source_wave_filename);
+    // shared_utils.write_32_bit_float_buffer_to_16_bit_wav_file(source_obj, source_wave_filename);
+
+	shared_utils.write_32_bit_float_buffer_to_16_bit_wav_file(source_obj, source_wave_filename);
+
+
+// var read_wav_file = function(input_filename, cb_read_file_done) {
+
+
 
     console.log("source_wave_filename   ", source_wave_filename);
 
@@ -139,11 +118,17 @@ var synth_curve_write_to_wav_file_then_read_back = function () {
 
     var spec = {};
 
+/*
     shared_utils.read_16_bit_wav_file_into_32_bit_float_buffer(
                                     wav_file_input_obj,
                                     wav_file_input_obj.filename, 
                                     spec,
                                     cb_read_file_done);
+*/
+
+	shared_utils.read_wav_file(wav_file_input_obj.filename, cb_read_file_done);
+
+
 
 };      //      synth_curve_write_to_wav_file_then_read_back
 
