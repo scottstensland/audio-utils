@@ -1,6 +1,6 @@
 {
   "name": "audio-utils",
-  "version": "0.0.10-3",
+  "version": "1.0.0",
   "description": "Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves",
   "main": "src/audio_utils.js",
   "scripts": {

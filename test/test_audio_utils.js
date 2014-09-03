@@ -2,10 +2,10 @@
 
 // ---
 
-var audio_util_obj = require("../src/audio_utils");
+// var audio_util_obj = require("../src/audio_utils");
+// var audio_utils = audio_util_obj.audio_utils();
 
-var audio_utils = audio_util_obj.audio_utils();
-
+var audio_utils = require("../src/audio_utils");
 console.log("audio_utils ", audio_utils);
 
 // ---

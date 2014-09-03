@@ -1,9 +1,9 @@
 
-module.exports.audio_utils = function() {
+// module.exports.audio_utils = function() {
+
 
 // Audio utilities like fundamental frequency detection, populate buffer with sinusoidal curves
 
-var that = {};
 var shared_utils = require("shared-utils");
 
 // ---
@@ -225,9 +225,7 @@ do {
 } while (size_subsection > minimum_size_subsection);
 
 };      //      play_detect_frequency
-
-that.play_detect_frequency = play_detect_frequency;
-
+exports.play_detect_frequency = play_detect_frequency;
 
 // ---
 
@@ -405,8 +403,7 @@ do {
 } while (size_subsection > minimum_size_subsection);
 
 };      //      detect_fundamental_frequency
-
-that.detect_fundamental_frequency = detect_fundamental_frequency;
+exports.detect_fundamental_frequency = detect_fundamental_frequency;
 
 // ------------------------------------------------------------------------ //
 
@@ -487,8 +484,5 @@ var pop_audio_buffer = function (size_buff, given_samples_per_cycle) {
 
 };       //      pop_audio_buffer
 
-that.pop_audio_buffer = pop_audio_buffer;
+exports.pop_audio_buffer = pop_audio_buffer;
 
-return that;
-
-};
