@@ -7,7 +7,7 @@
     "test": "node test/test_audio_utils.js"
   },
   "dependencies": {
-    "shared-utils": ">=0.1.6"
+    "shared-utils": "x.x.x"
   },
   "repository": {
     "type": "git",
