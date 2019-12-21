@@ -6,9 +6,9 @@
   "scripts": {
     "test": "node test/test_audio_utils.js"
   },
-	"dependencies": {
-		"shared-utils" : "0.1.6"
-	},
+  "dependencies": {
+    "shared-utils": "0.1.6"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/scottstensland/audio-utils.git"

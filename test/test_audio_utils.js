@@ -112,7 +112,9 @@ var synth_curve_write_to_wav_file_then_read_back = function () {
 
     wav_file_input_obj.filename = source_wave_filename;
 
-    wav_file_input_obj[property_buffer_raw_input_file] = new Buffer(0);
+    // wav_file_input_obj[property_buffer_raw_input_file] = new Buffer(0); // gives (node:429147) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+
+    wav_file_input_obj[property_buffer_raw_input_file] = new Buffer.alloc(0);
 
     console.log("abouttttt to read wav_file_input_obj.filename ", wav_file_input_obj.filename);
 
